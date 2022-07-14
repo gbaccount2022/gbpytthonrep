@@ -1,16 +1,22 @@
 
 
+def lookingForString(lst, str):
 
-line = input('Enter words with spaces:')
-#line = "a aa abC aa ac abc bcd a"
+    print(f'Array {lst} looking for "{str}"')
 
-counter = {}
-words = line.split(" ")
+    try:
+        i = lst.index(str)
+        if i >= 0:
+            i = lst.index(str, i+1)
+    except:
+        return -1
 
-for i in words:
-    key = i.lower()
-    counter.setdefault(key, 0)
-    counter[key] += 1
+    return i
 
-for i in counter:
-    print(f'{i} {counter[i]}')
+
+print(lookingForString(["qwe", "asd", "zxc", "qwe", "ertqwe"], "qwe"))
+print(lookingForString(["йцу", "фыв", "ячс", "цук", "йцукен", "йцу"], "йцу"))
+print(lookingForString(["йцу", "фыв", "ячс", "цук", "йцукен"], "йцу"))
+print(lookingForString(["123", "234", 123, "567"], "123"))
+print(lookingForString([], "123"))
+
