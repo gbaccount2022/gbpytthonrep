@@ -13,4 +13,4 @@ def Factor(n):
         Ans.append(n)
     return Ans
 
-print(Factor(N))
+print(f'Taking factor of {N} - {Factor(N)}')
