@@ -18,7 +18,7 @@ def unwindLine(line = "0"):
 
     a = b = ''
 
-    print(line)
+    #print(line)
 
     if line.find('(') != -1:
         st = line.rfind('(')
