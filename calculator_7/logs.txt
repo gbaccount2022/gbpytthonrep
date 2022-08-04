@@ -1,0 +1,6 @@
+Option selected 2
+Taking value from user
+Input line is: 
+Value from user taken (1+3j)+(3-1j)
+Calculate complex: (1+3j)+(3-1j)
+Result taken (4+2j)
