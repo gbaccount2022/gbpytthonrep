@@ -44,6 +44,6 @@ def button_click():
 
         log.write(f'Result taken {result}')
 
-        break
+        v.set_value(result)
 
-    return result
+    return
