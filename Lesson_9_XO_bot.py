@@ -1,5 +1,10 @@
 
+from inspect import getfile
+from operator import setitem
 import random
+import telebot
+
+
 
 # field
 # . . .
@@ -15,17 +20,21 @@ movesCount = 0 # current valid moves
 maxMovesCount = maxX * maxY # maximum moves count on the field
 
 
+# 5518615683:AAFFYHwQPFd06FJGE3nH4DdUs288ERZjHIY
+
+
 # fill field with default values
 field = [['.' for i in range(maxX)] for j in range(maxY)]
 
 
 ##################################################
 # print battlefield
-def showField():
-    print(' -------------')
+def getField():
+    result = ' -------------\n'
     for index,item in enumerate(field):
-        print(item)
-    print(' -------------')
+        result += ' '.join(item) + '\n';
+    result += ' -------------\n'
+    return result
 
 
 ##################################################
@@ -157,20 +166,57 @@ def checkWinLoose():
     return searchDiagonal()
 
 
-def debug(owner, moves):
-    for i, coordinates in enumerate(moves):
-        doMove(owner, coordinates[0], coordinates[1])
-    showField()
-    if checkWinLoose():
-        print('[DEBUG] Success we have winner')
-
-#debug('#', [[1,1],[2,2],[3,3]])
-#debug('O', [[3,1],[2,2],[1,2]])
-
 def do_bot_move(owner):
-
     return setItem(owner, random.randint(1, maxY), random.randint(1, maxX))
 
+
+
+tgbot = telebot.TeleBot("TOKEN :-)", parse_mode=None) # You can set parse_mode by default. HTML or MARKDOWN
+@tgbot.message_handler(func=lambda message: True)
+def echo_all(message):
+    global owner
+    global movesCount
+    global maxMovesCount
+    global field
+
+    if message.text == '/start':
+        owner = 'X' # who do move first
+        movesCount = 0 # current valid moves
+        maxMovesCount = maxX * maxY # maximum moves count on the field
+        # fill field with default values
+        field = [['.' for i in range(maxX)] for j in range(maxY)]
+    else:
+
+        if movesCount >= maxMovesCount:
+            tgbot.reply_to(message, 'Start new game please by /start')
+            return
+
+        [y,x] = list(map(int, message.text.split()))
+        while not setItem('X', y, x):
+            tgbot.reply_to(message, 'Bad position')
+            return
+
+        tgbot.reply_to(message, getField())
+
+        while not do_bot_move('O'):
+            continue
+
+        if checkWinLoose():
+            tgbot.reply_to(message, 'We have winner')
+            movesCount = maxMovesCount
+
+        #
+        if movesCount >= maxMovesCount:
+            tgbot.reply_to(message, getField())
+            tgbot.reply_to(message, 'The game is over, bye!')
+            return
+
+
+    tgbot.reply_to(message, getField())
+
+tgbot.infinity_polling()
+
+"""
 while True:
     #
     showField()
@@ -193,4 +239,4 @@ while True:
         print('The game is over, bye!')
         break
     
-    
+"""
