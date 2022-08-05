@@ -20,9 +20,6 @@ movesCount = 0 # current valid moves
 maxMovesCount = maxX * maxY # maximum moves count on the field
 
 
-# 5518615683:AAFFYHwQPFd06FJGE3nH4DdUs288ERZjHIY
-
-
 # fill field with default values
 field = [['.' for i in range(maxX)] for j in range(maxY)]
 
@@ -171,7 +168,7 @@ def do_bot_move(owner):
 
 
 
-tgbot = telebot.TeleBot("TOKEN :-)", parse_mode=None) # You can set parse_mode by default. HTML or MARKDOWN
+tgbot = telebot.TeleBot("TOKEN", parse_mode=None) # You can set parse_mode by default. HTML or MARKDOWN
 @tgbot.message_handler(func=lambda message: True)
 def echo_all(message):
     global owner
