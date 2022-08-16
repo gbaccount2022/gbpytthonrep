@@ -1,0 +1,2 @@
+{"id_post": "1", "id_otdel": "2", "id_man": 7, "_id": 7}
+{"id_post": "1", "id_otdel": "3", "id_man": 8, "_id": 8}
